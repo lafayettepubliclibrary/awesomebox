@@ -17,21 +17,21 @@ def scancode():
 #    lcd.message("Please Scan Your\n")
 #    lcd.message("  Awesome Item")
 #    bcode = str(raw_input())
-    bcode = str(getpass.getpass(prompt=""))
-    baseurl = ("http://ipac.lafayette.lib.la.us:8080/ipac20/ipac.jsp?term=%s&index=BC" % bcode)
-    html = urlopen(baseurl)
-    soup = BeautifulSoup(html)
+    bcode = str(getpass.getpass(prompt=""))  #Get barcode of item wihtout printing it to the screen
+    baseurl = ("http://ipac.lafayette.lib.la.us:8080/ipac20/ipac.jsp?term=%s&index=BC" % bcode) #Insert barcode into URL
+    html = urlopen(baseurl) #Get HTML code
+    soup = BeautifulSoup(html) #Dump it into BeautifulSoup
 #    print(soup)
-    title = soup.findAll("a",{"class" : "largeAnchor"})
+    title = soup.findAll("a",{"class" : "largeAnchor"}) #Get the book title
 #    print(title)
 #    print("================")
-    for i in title:
+    for i in title:  #Print just the text of the title and strip trailing /
         text = ''.join(i.findAll(text=True))
         data = text.strip()
         print("I agree! %sis awesome!" % data[:-1])
     print("================")
-#    print("I agree, %s is awesome!" % title)
-#    print("http://ipac.lafayette.lib.la.us:8080/ipac20/ipac.jsp?term=%s&index=BC" % bcode)
+    
+    #Give me a pause before a new scan
     print("Hit enter to scan again")
     raw_input()
 
@@ -40,5 +40,5 @@ try:
         scancode()
 except:
     print("exiting")
-    lcd.clear()
-    lcd.backlight(lcd.OFF)
+#    lcd.clear()
+#    lcd.backlight(lcd.OFF)
